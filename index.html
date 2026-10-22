@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>坚定“四个自信” · 主题宣讲</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --red:#9E1B1B;
+    --red-deep:#6E0F0F;
+    --gold:#C9A063;
+    --gold-2:#E7D3A5;
+    --gold-3:#FBF0DC;
+    --ink:#23272E;
+  }
+  html,body{height:100%;}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Source Han Sans SC",sans-serif;
+    background:#FAF6EF;color:var(--ink);overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    cursor:pointer;
+  }
+
+  /* ---------- 顶部进度条 ---------- */
+  .progress{position:fixed;top:0;left:0;right:0;height:4px;background:rgba(158,27,27,.08);z-index:80;}
+  .progress-bar{height:100%;width:0;background:linear-gradient(90deg,#9E1B1B,#D4AF37);transition:width .45s ease;}
+
+  /* ---------- 幻灯片容器 ---------- */
+  .deck{position:fixed;inset:0;display:flex;transition:transform .55s cubic-bezier(.45,.05,.25,1);}
+
+  .slide{
+    flex:0 0 100vw;height:100vh;position:relative;
+    display:flex;overflow-y:auto;
+    padding:44px 52px 92px;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(201,160,99,.16), transparent 42%),
+      radial-gradient(circle at 0% 100%, rgba(158,27,27,.05), transparent 42%),
+      linear-gradient(180deg,#FCF9F3,#F6F0E6);
+  }
+  .slide::-webkit-scrollbar{width:7px;}
+  .slide::-webkit-scrollbar-thumb{background:#E0CFAE;border-radius:4px;}
+
+  .slide-inner{margin:auto;width:min(1180px,100%);position:relative;}
+
+  /* ---------- 卡片 ---------- */
+  .card{
+    position:relative;background:#fff;
+    border:1px solid #EADFC9;border-top:5px solid var(--red);
+    padding:42px 54px 46px;
+    box-shadow:0 16px 44px rgba(110,15,15,.07);
+  }
+  .card::before,.card::after{
+    content:"";position:absolute;bottom:16px;width:30px;height:30px;
+    border-bottom:2px solid var(--gold-2);pointer-events:none;
+  }
+  .card::before{left:16px;border-left:2px solid var(--gold-2);}
+  .card::after{right:16px;border-right:2px solid var(--gold-2);}
+
+  .tag{
+    display:inline-block;padding:5px 16px;font-size:15px;letter-spacing:2.5px;
+    color:#8A6A34;background:var(--gold-3);border:1px solid var(--gold-2);border-radius:2px;
+  }
+  .card-head h2{
+    font-family:"Source Han Serif SC","Songti SC",SimSun,serif;
+    font-size:clamp(28px,3vw,40px);line-height:1.42;color:var(--red);
+    letter-spacing:.5px;margin:16px 0 0;font-weight:700;
+  }
+  .head-rule{width:76px;height:4px;margin:16px 0 28px;
+    background:linear-gradient(90deg,var(--red),var(--gold));}
+
+  .card-body{font-size:clamp(18px,1.55vw,21px);line-height:1.9;color:#3A4048;}
+  .card-body p{margin-bottom:16px;}
+  .card-body p:last-child{margin-bottom:0;}
+
+  /* ---------- 引导语 ---------- */
+  .lead{
+    font-size:clamp(17px,1.4vw,19.5px);color:#8A6A34;background:#FCF6E9;
+    border-left:4px solid var(--gold);padding:12px 18px;margin:0 0 26px;line-height:1.75;
+  }
+
+  /* ---------- 编号条目 ---------- */
+  .item{display:flex;gap:18px;margin-bottom:26px;}
+  .item:last-child{margin-bottom:0;}
+  .item .num{
+    flex:0 0 38px;height:38px;margin-top:3px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,#A82323,#7E1212);
+    color:#F6E3BF;font-size:18px;font-weight:700;border-radius:3px;
+    box-shadow:0 3px 10px rgba(126,18,18,.22);
+  }
+  .item .txt{flex:1;min-width:0;}
+  .item .txt h3{
+    font-size:clamp(19px,1.6vw,22px);font-weight:700;color:#22262C;
+    line-height:1.6;margin-bottom:8px;
+  }
+  .item .txt h3 .hl{color:var(--red);}
+  .item .txt p{font-size:clamp(17px,1.45vw,20px);line-height:1.88;color:#454B54;margin:0;}
+
+  /* ---------- 要点列表 ---------- */
+  .bullets{list-style:none;}
+  .bullets li{
+    position:relative;padding-left:26px;margin-bottom:14px;
+    font-size:clamp(18px,1.55vw,21px);line-height:1.85;color:#3A4048;
+  }
+  .bullets li:last-child{margin-bottom:0;}
+  .bullets li::before{
+    content:"";position:absolute;left:4px;top:.72em;
+    width:9px;height:9px;background:var(--gold);transform:rotate(45deg);
+  }
+  .bullets li strong{color:var(--red);}
+
+  /* ---------- 关键词标签 ---------- */
+  .chips{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 26px;}
+  .chips span{
+    font-size:clamp(15px,1.15vw,17px);padding:7px 18px;border-radius:22px;
+    color:#8A5A17;background:#FBF0DC;border:1px solid #E9D6AE;letter-spacing:.5px;
+  }
+
+  /* ---------- 强调框 ---------- */
+  .callout{
+    margin-top:26px;padding:20px 24px 20px 26px;
+    background:linear-gradient(90deg,#FDF5E4,#FFFCF6);
+    border-left:5px solid var(--gold);border-radius:0 3px 3px 0;
+    font-size:clamp(18px,1.5vw,20.5px);line-height:1.88;color:#5C4620;
+  }
+  .callout b{color:var(--red);}
+  .callout.big{font-size:clamp(21px,1.85vw,26px);line-height:1.85;padding:26px 30px;}
+
+  /* ---------- 出处标注 ---------- */
+  .source{
+    display:inline-block;margin-top:24px;padding-left:14px;
+    border-left:4px solid var(--red);
+    font-size:clamp(15px,1.15vw,17px);letter-spacing:1px;color:#9E1B1B;
+  }
+
+  /* ---------- 封面 ---------- */
+  .cover{
+    padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,225,170,.20), transparent 55%),
+      linear-gradient(160deg,#8E1414 0%,#7A1010 45%,#5C0B0B 100%);
+  }
+  .cover-frame{
+    position:absolute;inset:24px;border:1px solid rgba(220,190,130,.35);pointer-events:none;
+  }
+  .cover-frame::after{
+    content:"";position:absolute;inset:9px;border:1px solid rgba(220,190,130,.15);
+  }
+  .cover-inner{position:relative;z-index:2;text-align:center;padding:40px 30px;}
+  .cover-eyebrow{font-size:clamp(14px,1.3vw,18px);letter-spacing:12px;color:#D9BC84;margin-bottom:34px;}
+  .cover-inner h1{
+    font-family:"Source Han Serif SC","Songti SC",SimSun,serif;
+    font-size:clamp(42px,7vw,84px);letter-spacing:7px;font-weight:700;
+    color:#FFF4DE;text-shadow:0 4px 24px rgba(0,0,0,.35);margin-bottom:30px;
+  }
+  .cover-divider{
+    display:flex;align-items:center;justify-content:center;gap:16px;
+    color:#D9BC84;font-size:15px;margin-bottom:30px;
+  }
+  .cover-divider::before,.cover-divider::after{
+    content:"";width:82px;height:1px;background:rgba(217,188,132,.6);
+  }
+  .cover-sub{
+    font-size:clamp(17px,2.1vw,26px);letter-spacing:4px;
+    color:#F0DCB6;margin-bottom:50px;
+  }
+  .cover-foot{
+    display:inline-block;padding-top:22px;
+    border-top:1px solid rgba(217,188,132,.25);
+    font-size:clamp(14px,1.3vw,18px);line-height:1.9;letter-spacing:1.5px;
+    color:rgba(240,220,182,.72);
+  }
+
+  /* ---------- 尾页 ---------- */
+  .ending{
+    padding:0;display:flex;align-items:center;justify-content:center;
+    background:
+      radial-gradient(circle at 50% 45%, rgba(255,225,170,.16), transparent 60%),
+      linear-gradient(160deg,#8E1414 0%,#7A1010 45%,#5C0B0B 100%);
+  }
+  .end-inner{position:relative;z-index:2;text-align:center;padding:40px 24px;}
+  .end-inner::before,.end-inner::after{
+    content:"";display:block;width:120px;height:2px;margin:0 auto;
+    background:linear-gradient(90deg,transparent,rgba(217,188,132,.85),transparent);
+  }
+  .end-inner::before{margin-bottom:46px;}
+  .end-inner::after{margin-top:46px;}
+  .end-main{
+    font-family:"Source Han Serif SC","Songti SC",SimSun,serif;
+    font-size:clamp(38px,7.4vw,104px);
+    font-weight:800;letter-spacing:5px;line-height:1.32;
+    color:#FFF6E2;
+    text-shadow:0 6px 30px rgba(0,0,0,.45), 0 0 60px rgba(255,214,140,.28);
+    animation:endIn .9s ease both;
+  }
+  .end-sub{
+    margin-top:34px;
+    font-size:clamp(22px,3.4vw,48px);
+    letter-spacing:10px;color:#F0CF95;font-weight:700;
+    animation:endIn .9s .25s ease both;
+  }
+  @keyframes endIn{
+    from{opacity:0;transform:translateY(26px) scale(.96);}
+    to{opacity:1;transform:none;}
+  }
+
+  /* ---------- 右下导航 ---------- */
+  .hud{
+    position:fixed;right:26px;bottom:22px;z-index:90;
+    display:flex;align-items:center;gap:14px;
+    padding:8px 12px 8px 20px;border-radius:32px;
+    background:rgba(255,255,255,.92);border:1px solid #E7D9C0;
+    box-shadow:0 6px 20px rgba(110,15,15,.1);
+    backdrop-filter:blur(6px);cursor:default;
+  }
+  .hud .counter{font-size:15px;letter-spacing:1px;color:#8A7350;}
+  .hud .counter b{color:var(--red);font-size:18px;}
+  .hud button{
+    width:38px;height:38px;border-radius:50%;cursor:pointer;
+    border:1px solid #E0CFAE;background:#fff;color:var(--red);
+    font-size:21px;line-height:1;display:flex;align-items:center;justify-content:center;
+    transition:.2s;font-family:inherit;
+  }
+  .hud button:hover{background:var(--red);color:#fff;border-color:var(--red);}
+  .hud button:disabled{opacity:.3;cursor:not-allowed;}
+
+  /* ================================================================
+     新插页（双图排版）
+     ================================================================ */
+  .img-layout{
+    display: flex;
+    gap: 30px;
+    align-items: stretch;
+    margin-top: 10px;
+    height: 100%;
+  }
+  .img-col{
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+  }
+  .img-box{
+    position: relative;
+    border: 3px solid var(--gold-2);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(110,15,15,.12);
+    background: #f5f5f5;
+    aspect-ratio: 4/3;
+  }
+  .img-box img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .img-box.gray img{
+    filter: grayscale(100%) contrast(1.1);
+  }
+  .img-caption{
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(158, 27, 27, 0.85);
+    color: #FFF4DE;
+    padding: 8px 12px;
+    font-size: 15px;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  .text-col{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 0;
+  }
+
+  @media (max-width: 860px){
+    .img-layout{ flex-direction: column; }
+    .img-col{ flex-direction: row; }
+    .img-box{ aspect-ratio: 1/1; }
+  }
+
+  /* 新增：纯图片并列行（无文字） */
+  .images-row {
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+  }
+  .images-row .img-box {
+    flex: 1 1 0;
+    aspect-ratio: 4/3;
+  }
+  @media (max-width: 680px) {
+    .images-row {
+      flex-direction: column;
+      gap: 16px;
+    }
+    .images-row .img-box {
+      aspect-ratio: 4/3;
+    }
+  }
+
+  /* ================================================================
+     制度自信——三柱一基座
+     ================================================================ */
+  .support-visual{
+    display:flex;flex-direction:column;align-items:center;
+    margin:6px auto 0;max-width:860px;
+  }
+  .support-top{
+    display:flex;gap:18px;width:100%;
+  }
+  .support-top .pillar-card{
+    flex:1;
+    background:#FCF8F0;
+    border:1px solid #EFE4CE;
+    border-top:4px solid var(--gold);
+    padding:20px 10px;
+    text-align:center;
+    font-size:clamp(17px,1.45vw,21px);
+    font-weight:700;
+    color:#8A6A34;
+    letter-spacing:2px;
+  }
+  .support-arrows{
+    display:flex;gap:18px;width:100%;
+    padding:4px 0;
+  }
+  .support-arrows span{
+    flex:1;text-align:center;
+    color:var(--gold);font-size:20px;line-height:1;
+  }
+  .support-base{
+    width:100%;
+    background:linear-gradient(160deg,#A82323,#7E1212);
+    color:#FFF4DE;
+    border-radius:4px;
+    padding:24px 20px;
+    text-align:center;
+    font-size:clamp(20px,1.9vw,27px);
+    font-weight:800;
+    letter-spacing:4px;
+    box-shadow:0 10px 26px rgba(126,18,18,.26);
+  }
+
+  @media (max-height:820px){
+    .support-top .pillar-card{padding:14px 8px;}
+    .support-arrows span{font-size:17px;}
+    .support-base{padding:18px 16px;font-size:clamp(18px,1.7vw,23px);}
+  }
+
+  /* ================================================================
+     大字铺满，一屏显示
+     ================================================================ */
+  .slide.dense{padding:30px 48px 80px;}
+  .dense .slide-inner{width:min(1140px,100%);}
+  .dense .card{
+    padding:34px 48px 38px;
+    min-height:calc(100vh - 130px);
+    display:flex;
+    flex-direction:column;
+  }
+  .dense .card-head{flex-shrink:0;}
+  .dense .tag{font-size:14px;padding:5px 15px;letter-spacing:2.2px;}
+  .dense .card-head h2{
+    font-size:clamp(24px,2.4vw,32px);
+    margin-top:12px;line-height:1.38;
+  }
+  .dense .head-rule{width:68px;height:3px;margin:12px 0 20px;}
+  .dense .card-body{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+  }
+  .dense .lead{
+    font-size:clamp(16px,1.3vw,18px);
+    padding:10px 18px;margin-bottom:20px;line-height:1.7;
+  }
+  .dense .item{gap:16px;margin-bottom:0;}
+  .dense .item .num{
+    flex:0 0 36px;height:36px;font-size:17px;margin-top:2px;
+  }
+  .dense .item .txt h3{
+    font-size:clamp(18px,1.5vw,21px);
+    line-height:1.55;margin-bottom:7px;
+  }
+  .dense .item .txt p{
+    font-size:clamp(16.5px,1.35vw,19px);
+    line-height:1.8;
+  }
+  .dense .callout{
+    margin-top:18px;padding:14px 20px;
+    font-size:clamp(16.5px,1.35vw,19px);line-height:1.78;
+  }
+
+  @media (max-height:850px){
+    .slide.dense{padding:22px 40px 74px;}
+    .dense .card{padding:26px 38px 28px;min-height:calc(100vh - 118px);}
+    .dense .card-head h2{font-size:clamp(21px,2.1vw,27px);margin-top:9px;}
+    .dense .head-rule{margin:9px 0 15px;}
+    .dense .lead{font-size:15px;padding:8px 15px;margin-bottom:15px;}
+    .dense .item{gap:13px;}
+    .dense .item .num{flex:0 0 32px;height:32px;font-size:15px;}
+    .dense .item .txt h3{font-size:clamp(17px,1.4vw,19.5px);margin-bottom:5px;}
+    .dense .item .txt p{font-size:clamp(15.5px,1.25vw,17.5px);line-height:1.75;}
+    .dense .callout{padding:11px 16px;font-size:15.5px;margin-top:14px;}
+  }
+  @media (max-height:740px){
+    .slide.dense{padding:16px 34px 66px;}
+    .dense .card{padding:20px 30px 22px;min-height:calc(100vh - 104px);}
+    .dense .card-head h2{font-size:clamp(19px,1.9vw,24px);margin-top:7px;}
+    .dense .head-rule{margin:7px 0 11px;height:3px;}
+    .dense .lead{font-size:14px;padding:6px 12px;margin-bottom:11px;}
+    .dense .item{gap:10px;}
+    .dense .item .num{flex:0 0 28px;height:28px;font-size:13px;}
+    .dense .item .txt h3{font-size:clamp(16px,1.3vw,18px);margin-bottom:4px;}
+    .dense .item .txt p{font-size:clamp(14.5px,1.15vw,16.5px);line-height:1.7;}
+    .dense .callout{padding:9px 13px;font-size:14.5px;margin-top:10px;}
+  }
+  @media (max-width:680px){
+    .slide{padding:24px 16px 84px;}
+    .card{padding:28px 22px 32px;}
+    .item{gap:12px;}
+    .item .num{flex:0 0 32px;height:32px;font-size:15px;}
+    .hud{right:12px;bottom:12px;padding:6px 8px 6px 14px;gap:10px;}
+    .hud button{width:34px;height:34px;}
+    .slide.dense{padding:18px 14px 76px;}
+    .dense .card{padding:18px 16px 20px;min-height:calc(100vh - 96px);}
+    .dense .item .num{flex:0 0 26px;height:26px;font-size:12px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-bar" id="bar"></div></div>
+
+<div class="deck" id="deck">
+
+  <!-- ================= 第1页：封面 ================= -->
+  <section class="slide cover">
+    <div class="cover-frame"></div>
+    <div class="cover-inner">
+      <div class="cover-eyebrow">主 题 宣 讲</div>
+      <h1>坚定“四个自信”</h1>
+      <div class="cover-divider"><span>★</span></div>
+      <div class="cover-sub">道路自信 · 理论自信 · 制度自信 · 文化自信</div>
+      <div class="cover-foot">
+        为什么要坚定中国特色社会主义道路自信、理论自信、制度自信、文化自信
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 第2页：纯图片并列（1.webp / 2.webp） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card" style="padding:24px 28px;">
+        <div class="images-row">
+          <div class="img-box">
+            <img src="1.webp" alt="图片1">
+          </div>
+          <div class="img-box">
+            <img src="2.webp" alt="图片2">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 第3页：纯图片并列（3.webp / 4.webp） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card" style="padding:24px 28px;">
+        <div class="images-row">
+          <div class="img-box">
+            <img src="3.webp" alt="图片3">
+          </div>
+          <div class="img-box">
+            <img src="4.webp" alt="图片4">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 第4页：纯图片并列（5.webp / 6.webp） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card" style="padding:24px 28px;">
+        <div class="images-row">
+          <div class="img-box">
+            <img src="5.webp" alt="图片5">
+          </div>
+          <div class="img-box">
+            <img src="6.webp" alt="图片6">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 第5页：原第2页（什么是道路自信） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 01 · 道路自信</span>
+          <h2>什么是道路自信</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <p>中国特色社会主义道路自信，就是坚信中国特色社会主义道路是实现社会主义现代化、创造人民美好生活的必由之路，是立足我国历史文化、国情实践走出来的正确道路。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第3页（历史逻辑） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 01 · 道路自信</span>
+          <h2>历史逻辑：这条道路是历史和人民的选择</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <p>近代中国尝试过改良主义、资本主义等各种道路，都没能救中国。新中国成立后，经过探索与总结，我们走出中国特色社会主义道路。</p>
+          <p>不是照搬外国模式，而是中国人民在长期奋斗中比较、选择出来的，符合中国历史与文化传统。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第4页（实践逻辑） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 01 · 道路自信</span>
+          <h2>实践逻辑：实践成果证明道路行得通、有力量</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <p>走这条道路带来了实实在在的发展成就：</p>
+          <ul class="bullets">
+            <li>经济快速发展，综合国力大幅提升；</li>
+            <li>打赢脱贫攻坚战，全面建成小康社会；</li>
+            <li>民生持续改善，教育、医疗、基础设施不断完善；</li>
+            <li>国家保持长期稳定。</li>
+          </ul>
+          <div class="callout"><b>事实证明：</b>这条道路能够发展中国、造福人民。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第5页（理论逻辑） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 01 · 道路自信</span>
+          <h2>理论逻辑：植根科学理论，又立足中国实际</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <p>坚持科学社会主义基本原则，同时不教条化，把马克思主义基本原理同中国具体实际相结合、同中华优秀传统文化相结合。</p>
+          <p>既坚持社会主义根本方向，又灵活适配中国国情，不是简单复制他国模式。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第6页（价值逻辑） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 01 · 道路自信</span>
+          <h2>价值与未来逻辑：这条道路指向民族复兴</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <p>中国特色社会主义道路的目标，是实现中华民族伟大复兴，不断满足人民对美好生活的向往。</p>
+          <p>对比其他国家发展道路，这条道路可以在保持社会稳定前提下实现持续发展，为国家发展、人民幸福提供可靠路径。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第7页（道路自信来源） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 01 · 道路自信</span>
+          <h2>道路自信从何而来</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <div class="chips">
+            <span>历史的选择</span>
+            <span>实践的检验</span>
+            <span>理论的科学</span>
+            <span>人民的认同</span>
+          </div>
+          <div class="callout big">
+            中国特色社会主义道路自信，来源于历史的选择、实践的检验、理论的科学、人民的认同。
+          </div>
+          <p style="margin-top:24px;">这条道路，是实现民族复兴的唯一正确道路。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第8页（制度自信——三柱一基座） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 02 · 制度自信</span>
+          <h2>制度自信：四类自信的“刚性支撑”</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <div class="support-visual">
+            <div class="support-top">
+              <div class="pillar-card">道路自信</div>
+              <div class="pillar-card">理论自信</div>
+              <div class="pillar-card">文化自信</div>
+            </div>
+            <div class="support-arrows">
+              <span>▼</span>
+              <span>▼</span>
+              <span>▼</span>
+            </div>
+            <div class="support-base">制度自信 · 实践底座</div>
+          </div>
+
+          <div class="callout big" style="margin-top:32px;text-align:center;">
+            制度自信是四类自信的实践底座。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 原第9页（经济制度自信） ========== -->
+  <section class="slide dense">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 02 · 制度自信</span>
+          <h2>经济制度自信</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <p class="lead">经济制度——回答“为什么这套制度能发展中国、造福人民”</p>
+
+          <div class="item">
+            <div class="num">1</div>
+            <div class="txt">
+              <h3><span class="hl">所有制</span>：公有制为主体、多种所有制经济共同发展</h3>
+              <p>这套安排既避免单一公有制的僵化，也防止私有化放任带来的两极分化风险，在方向稳定性和微观活力之间保持平衡。</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="num">2</div>
+            <div class="txt">
+              <h3><span class="hl">分配制度</span>：按劳分配为主体、多种分配方式并存</h3>
+              <p>按劳分配为主体，是防止两极分化、走向共同富裕的制度底线；多种分配方式并存，承认资本、土地、知识等要素按贡献参与分配，调动各方面积极性。</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="num">3</div>
+            <div class="txt">
+              <h3><span class="hl">社会主义市场经济体制</span>：社会主义与市场经济的创造性结合</h3>
+              <p>既让市场在资源配置中起决定性作用，又更好发挥政府作用。</p>
+            </div>
+          </div>
+
+          <div class="callout">
+            <b>总结：</b>坚持制度自信，首先是因为这套制度能够发展生产力、改善人民生活、守住公平底线。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 原第10页（政治制度自信） ========== -->
+  <section class="slide dense">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 02 · 制度自信</span>
+          <h2>政治制度自信</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <p class="lead">政治制度——回答“为什么这套制度能保障人民当家作主、保持政治稳定”</p>
+
+          <div class="item">
+            <div class="num">1</div>
+            <div class="txt">
+              <h3><span class="hl">人民代表大会制度</span>：根本政治制度</h3>
+              <p>人民代表大会制度是我国的根本政治制度。它的本质内核是人民当家作主，实现坚持党的领导、人民当家作主、依法治国有机统一。</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="num">2</div>
+            <div class="txt">
+              <h3><span class="hl">中国共产党领导的多党合作和政治协商制度</span>：新型政党制度</h3>
+              <p>它把协商而不是对抗作为政治过程主轴，把共识而不是票决竞争作为合法性重要来源。</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="num">3</div>
+            <div class="txt">
+              <h3><span class="hl">基层群众自治制度</span>：全过程人民民主的基层根基</h3>
+              <p>基层群众自治制度让人民群众在基层党组织领导下依法直接行使民主选举、民主协商、民主决策、民主管理、民主监督的权利，进行自我管理、自我服务、自我教育、自我监督。</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="num">4</div>
+            <div class="txt">
+              <h3><span class="hl">民族区域自治制度</span></h3>
+              <p>各少数民族聚居的地方实行区域自治，设立自治机关，行使自治权，保障少数民族当家作主、管理本民族内部事务的权利。既促进各民族共同团结奋斗，又推动各民族共同繁荣发展。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第11页（政治制度自信判准） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 02 · 制度自信</span>
+          <h2>政治制度自信的判准</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <div class="callout big">
+            政治制度自信，核心不是“制度看起来是否熟悉”，而是“制度是否真正属于人民、是否有效运转、是否持续产出公共善”。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第12页（制度自信总结） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 02 · 制度自信</span>
+          <h2>总结：制度自信的原因</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <div class="item">
+            <div class="num">一</div>
+            <div class="txt">
+              <h3>植根本土，而非移植外来</h3>
+              <p>经济制度和政治制度都不是照搬别国模式，而是从中国革命、建设、改革实践中生长出来的。制度自信首先是适配性的自信。</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="num">二</div>
+            <div class="txt">
+              <h3>实践有效，而非逻辑空转</h3>
+              <p>制度好不好，最终看能否持续发展生产力、改善人民生活、维护社会安定。中国特色社会主义制度保障了经济快速发展和社会长期稳定，这种治理效能是制度自信最硬的依据。</p>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="num">三</div>
+            <div class="txt">
+              <h3>优势显著，且系统集成</h3>
+              <p>经济制度提供发展动力与公平底线，政治制度提供秩序保障与参与渠道，共同构成制度自信的结构性支撑。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第13页（为什么要坚持文化自信） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 03 · 文化自信</span>
+          <h2>我们为什么要坚持文化自信</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <p>习近平总书记指出：文化自信是一个国家、一个民族发展中更基本、更深沉、更持久的力量。</p>
+          <div class="callout">
+            在“四个自信”中，文化自信是更基础、更广泛、更深厚的自信，是道路自信、理论自信、制度自信的底气与根基。
+          </div>
+          <div class="chips" style="margin-top:28px;">
+            <span>一 · 文明底蕴</span>
+            <span>二 · 革命文化与先进文化</span>
+            <span>三 · 新时代实践</span>
+            <span>四 · 应对百年变局</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第14页（文化底蕴） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 03 · 文化自信</span>
+          <h2>一、源自中华五千多年文明积淀的深厚底蕴</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <div class="chips">
+            <span>绵延不断</span>
+            <span>根与魂</span>
+            <span>站稳脚跟的根基</span>
+          </div>
+          <ul class="bullets">
+            <li>中华文明是世界上唯一绵延不断且以国家形态发展至今的伟大文明</li>
+            <li>“周虽旧邦，其命维新”的进取精神，“民惟邦本”的治国理念</li>
+            <li>仁爱、诚信、正义、和合的价值追求；诸子百家、诗词歌赋、四大发明</li>
+            <li>优秀传统文化是中华民族的根与魂，是我们在世界文化激荡中站稳脚跟的坚实根基</li>
+          </ul>
+          <div class="source">历史来源 · 最深沉的历史积淀</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第15页（革命文化） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 03 · 文化自信</span>
+          <h2>二、源自党领导人民创造的革命文化和社会主义先进文化</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <div class="chips">
+            <span>红船精神</span>
+            <span>井冈山精神</span>
+            <span>长征精神</span>
+            <span>为人民服务</span>
+          </div>
+          <ul class="bullets">
+            <li>以红船精神、井冈山精神、长征精神为代表的革命文化</li>
+            <li>面向现代化、面向世界、面向未来的社会主义先进文化</li>
+            <li>“为人民服务”的价值坐标，“自力更生、艰苦奋斗”的精神气质</li>
+            <li>改革开放敢为人先的创新品格</li>
+            <li>熔铸于革命、建设、改革的历史进程之中</li>
+          </ul>
+          <div class="source">现实来源 · 最直接的现实滋养</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第16页（新时代实践） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 03 · 文化自信</span>
+          <h2>三、源自新时代伟大实践取得的历史性成就</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <div class="chips">
+            <span>脱贫攻坚</span>
+            <span>神舟飞天</span>
+            <span>北斗组网</span>
+            <span>高铁驰骋</span>
+            <span>国潮文博</span>
+          </div>
+          <ul class="bullets">
+            <li>全面建成小康社会、打赢脱贫攻坚战，历史性地解决了绝对贫困问题</li>
+            <li>神舟飞天、北斗组网、高铁驰骋，科技创新不断突破</li>
+            <li>中华优秀传统文化创造性转化、创新性发展，“国潮”兴起、文博热持续升温</li>
+            <li>中国道路的成功，让中华文明焕发出新的生机</li>
+          </ul>
+          <div class="source">实践检验 · 有充分理由相信自己的文化能够解答时代课题</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第17页（百年变局） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 03 · 文化自信</span>
+          <h2>四、应对百年变局、维护文化安全的精神支柱</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <div class="chips">
+            <span>百年变局</span>
+            <span>文化安全</span>
+            <span>战略定力</span>
+          </div>
+          <ul class="bullets">
+            <li>各种思想文化交流交融交锋更加频繁</li>
+            <li>历史虚无主义、文化渗透等挑战依然存在</li>
+            <li>一个抛弃了或者背叛了自己历史文化的民族，不仅不可能发展起来，而且很可能上演一场历史悲剧</li>
+            <li>文化自信关系国运兴衰、关系文化安全、关系民族精神的独立性</li>
+            <li>“不畏浮云遮望眼”，在风云变幻中保持战略定力</li>
+          </ul>
+          <div class="source">精神支柱 · 把中国发展的命运牢牢掌握在自己手中</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第18页（青年寄语） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 03 · 文化自信</span>
+          <h2>青年寄语</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <div class="callout big">
+            没有高度的文化自信，没有文化的繁荣兴盛，就没有中华民族伟大复兴。
+          </div>
+          <ul class="bullets" style="margin-top:28px;">
+            <li>做中华优秀传统文化的<strong>传承者</strong></li>
+            <li>做社会主义先进文化的<strong>践行者与传播者</strong></li>
+            <li>把文化自信转化为扎实求学、报效祖国的实际行动</li>
+            <li>为推进中国式现代化贡献青春力量</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第19页（什么是理论自信） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 04 · 理论自信</span>
+          <h2>什么是理论自信</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <p>理论自信是对中国特色社会主义理论体系的科学性、真理性、正确性的自信。</p>
+          <div class="callout">
+            <b>为什么要坚定理论自信？</b>坚定理论自信，核心是源于中国特色社会主义理论体系的科学真理性、实践有效性与与时俱进的鲜明品格，它是指导党和人民实现中华民族伟大复兴的正确理论。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第20页（科学真理力量） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 04 · 理论自信</span>
+          <h2>理论本身具备科学真理力量</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <div class="chips">
+            <span>邓小平理论</span>
+            <span>“三个代表”重要思想</span>
+            <span>科学发展观</span>
+            <span>习近平新时代中国特色社会主义思想</span>
+          </div>
+          <p>中国特色社会主义理论体系，包括邓小平理论、“三个代表”重要思想、科学发展观、习近平新时代中国特色社会主义思想。</p>
+          <p>这一理论体系是科学的，它体现了马克思主义的根本立场，贯穿了辩证唯物主义和历史唯物主义的世界观方法论，具有无可比拟的真理力量。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第21页（伟大成就） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 04 · 理论自信</span>
+          <h2>实践中取得举世公认的伟大成就</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <p>这一理论深刻回答了当代中国向何处去、社会主义向何处去等重大时代问题，推动中国实现从“赶上时代”到“引领时代”的跨越，是改变中国、影响世界的正确理论。</p>
+          <p>纵观世界政党发展史，没有哪一个政党像中国共产党这样如此重视理论创新，在实践基础上创造出如此系统丰富的科学理论，推动中华民族迎来了从站起来、富起来到强起来的伟大飞跃。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第22页（根本思想指引） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 04 · 理论自信</span>
+          <h2>党和人民奋进的根本思想指引</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <div class="callout big">
+            坚持理论自信，才能用科学理论武装头脑、统一全党全国各族人民的思想意志，凝聚起推进民族复兴的磅礴力量，确保在复杂风险考验中始终保持正确前进方向。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第23页（与时俱进） ================= -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="card">
+        <div class="card-head">
+          <span class="tag">PART 04 · 理论自信</span>
+          <h2>始终保持与时俱进的创新活力</h2>
+          <div class="head-rule"></div>
+        </div>
+        <div class="card-body">
+          <p>它不是僵化的教条，而是随实践不断发展的开放理论，习近平新时代中国特色社会主义思想作为其最新成果，实现了马克思主义中国化新的飞跃，持续开辟当代中国马克思主义的新境界。</p>
+          <div class="callout">
+            这些便是我们理直气壮地坚定理论自信的坚实基础。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 原第24页（尾页） ================= -->
+  <section class="slide ending">
+    <div class="slide-inner end-inner">
+      <div class="end-main">坚持中国特色社会主义！！！</div>
+      <div class="end-sub">（欢呼）</div>
+    </div>
+  </section>
+
+</div>
+
+<!-- 右下角导航 -->
+<div class="hud" id="hud">
+  <span class="counter"><b id="now">01</b> / <span id="total">27</span></span>
+  <button id="prev" aria-label="上一页">‹</button>
+  <button id="next" aria-label="下一页">›</button>
+</div>
+
+<script>
+(function () {
+  var deck   = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(deck.children);
+  var bar    = document.getElementById('bar');
+  var nowEl  = document.getElementById('now');
+  var totalEl= document.getElementById('total');
+  var prevBtn= document.getElementById('prev');
+  var nextBtn= document.getElementById('next');
+  var hud    = document.getElementById('hud');
+  var idx = 0;
+
+  totalEl.textContent = String(slides.length).padStart(2, '0');
+
+  function render() {
+    deck.style.transform = 'translateX(' + (-idx * 100) + 'vw)';
+    bar.style.width = (slides.length > 1 ? (idx / (slides.length - 1) * 100) : 0) + '%';
+    nowEl.textContent = String(idx + 1).padStart(2, '0');
+    prevBtn.disabled = (idx === 0);
+    nextBtn.disabled = (idx === slides.length - 1);
+    slides[idx].scrollTop = 0;
+  }
+
+  function go(i) {
+    var n = Math.max(0, Math.min(slides.length - 1, i));
+    if (n === idx) return;
+    idx = n;
+    render();
+  }
+
+  prevBtn.addEventListener('click', function (e) { e.stopPropagation(); go(idx - 1); });
+  nextBtn.addEventListener('click', function (e) { e.stopPropagation(); go(idx + 1); });
+
+  /* ---------- 鼠标左键单击翻页 ---------- */
+  var touchMoved = false;
+
+  document.addEventListener('click', function (e) {
+    if (hud.contains(e.target)) return;
+    if (touchMoved) return;
+    var sel = window.getSelection ? String(window.getSelection()) : '';
+    if (sel && sel.length > 0) return;
+    go(idx + 1);
+  });
+
+  /* ---------- 键盘 ---------- */
+  document.addEventListener('keydown', function (e) {
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].indexOf(e.key) > -1) { e.preventDefault(); go(idx + 1); }
+    if (['ArrowLeft', 'ArrowUp', 'PageUp'].indexOf(e.key) > -1) { e.preventDefault(); go(idx - 1); }
+    if (e.key === 'Home') { e.preventDefault(); go(0); }
+    if (e.key === 'End')  { e.preventDefault(); go(slides.length - 1); }
+  });
+
+  /* ---------- 滚轮翻页 ---------- */
+  var lock = false;
+  window.addEventListener('wheel', function (e) {
+    if (lock || Math.abs(e.deltaY) < 24) return;
+    var s = slides[idx];
+    var canScroll = s.scrollHeight > s.clientHeight + 2;
+    if (canScroll) {
+      var atTop = s.scrollTop <= 0;
+      var atBottom = s.scrollTop + s.clientHeight >= s.scrollHeight - 2;
+      if (!(e.deltaY > 0 && atBottom) && !(e.deltaY < 0 && atTop)) return;
+    }
+    lock = true;
+    go(idx + (e.deltaY > 0 ? 1 : -1));
+    setTimeout(function () { lock = false; }, 650);
+  }, { passive: true });
+
+  /* ---------- 触屏左右滑动 ---------- */
+  var sx = 0, sy = 0;
+  window.addEventListener('touchstart', function (e) {
+    touchMoved = false;
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', function (e) {
+    var dx = Math.abs(e.touches[0].clientX - sx);
+    var dy = Math.abs(e.touches[0].clientY - sy);
+    if (dx > 10 || dy > 10) touchMoved = true;
+  }, { passive: true });
+
+  window.addEventListener('touchend', function (e) {
+    var dx = e.changedTouches[0].clientX - sx;
+    var dy = e.changedTouches[0].clientY - sy;
+    if (touchMoved && Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+      go(idx + (dx < 0 ? 1 : -1));
+    }
+    setTimeout(function () { touchMoved = false; }, 60);
+  }, { passive: true });
+
+  render();
+})();
+</script>
+</body>
+</html>
